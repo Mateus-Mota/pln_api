@@ -1,10 +1,12 @@
+import uuid
 from datetime import datetime
 
-from apps.db.database import Base
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
-
-import uuid
 from sqlalchemy.dialects.postgresql import UUID
+
+from apps.db.database import Base
+
+
 def generate_uuid():
     return str(uuid.uuid4())
 

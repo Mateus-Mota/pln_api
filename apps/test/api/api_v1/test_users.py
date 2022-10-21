@@ -1,7 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
+
 from apps import crud
+
 
 @pytest.fixture(scope="module")
 def test_create_user(test_client_app: TestClient, data_user):

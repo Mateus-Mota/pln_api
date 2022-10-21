@@ -1,8 +1,9 @@
-from typing import Optional, List
+from typing import List, Optional
 
 from sqlalchemy.orm import Session
+
 from apps.models.user_models import UserModel
-from apps.schemas.user_schemas import UserCreateSchema, UserSchema, ChangePassword
+from apps.schemas.user_schemas import ChangePassword, UserCreateSchema, UserSchema
 
 
 def get_all_users(db: Session) -> List[UserModel]:
@@ -14,10 +15,12 @@ def get_user_by_username(db: Session, username: str) -> Optional[UserModel]:
 
 
 def get_user_by_email(db: Session, email: str) -> UserModel:
-    return db.query(UserModel).filter(UserModel.email == email).first()  # type: ignore
+    return db.query(UserModel).filter(
+        UserModel.email == email).first()  # type: ignore
 
 
-def add_user(db: Session, user_data: UserCreateSchema, hashed_password) -> UserSchema:
+def add_user(db: Session, user_data: UserCreateSchema,
+             hashed_password) -> UserSchema:
 
     db_user = UserModel(
         username=user_data.username,

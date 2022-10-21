@@ -1,14 +1,15 @@
 import logging
 import os
+
+import numpy as np
+import tensorflow_datasets as tfds
+
+from apps.core.config import get_settings
+from apps.pln.dm.dcnn import DCNN
+
 logging.disable(logging.WARNING)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-logging.getLogger('tensorflow').disabled = True
-
-
-from apps.pln.dm.dcnn import DCNN
-from apps.core.config import get_settings
-import tensorflow_datasets as tfds
-import numpy as np
+logging.getLogger("tensorflow").disabled = True
 
 
 def accuracy_predict(text: str):
