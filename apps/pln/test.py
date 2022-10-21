@@ -1,22 +1,22 @@
-import logging, os
-logging.disable(logging.WARNING)
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import logging
-logging.getLogger('tensorflow').disabled = True
+import os
 
 import numpy as np
-from dm.dcnn import DCNN
 import tensorflow_datasets as tfds
+from dm.dcnn import DCNN
 
+logging.disable(logging.WARNING)
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+logging.getLogger("tensorflow").disabled = True
 
 Dcnn = DCNN()
 Dcnn.built = True
 
-path = 'apps/pln/weights_folder/my_weights'
+path = "apps/pln/weights_folder/my_weights"
 Dcnn.load_weights(path).expect_partial()
 
 vocab_fname = "apps/pln/services/ttVocab"
-
 
 encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(vocab_fname)
 text = "I like you"

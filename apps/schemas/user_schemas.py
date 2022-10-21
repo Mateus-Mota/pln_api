@@ -34,6 +34,6 @@ class ChangePassword(BaseModel):
     current_password: str
     new_password: str
     confirm_password: str
-    
+
     class Config:
         orm_mode = False

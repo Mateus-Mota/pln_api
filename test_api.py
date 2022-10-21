@@ -1,6 +1,5 @@
 import requests
 
-
 data = {
     "message": "I am really happy",
 }

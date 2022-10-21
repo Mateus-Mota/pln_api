@@ -1,9 +1,11 @@
 from email import message
+
 from sqlalchemy.orm import Session
+
 from apps.models.accuracy_models import AccuracyModel
+from apps.pln.accuracy import accuracy_predict
 from apps.schemas import accuracy_schema
 from apps.schemas.accuracy_schema import AccuracyResponse
-from apps.pln.accuracy import accuracy_predict
 from apps.services.translate_message import translate
 
 

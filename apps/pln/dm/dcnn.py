@@ -5,27 +5,46 @@ from tensorflow.keras import layers
 
 class DCNN(keras.Model):
 
-    def __init__(self, vocab_size=52455, emb_dim=128, nb_filters=50, ffn_units=512, nb_classes=2,
-                 dropout_rate=0.1, training=True, name="dcnn"):
+    def __init__(
+        self,
+        vocab_size=52455,
+        emb_dim=128,
+        nb_filters=50,
+        ffn_units=512,
+        nb_classes=2,
+        dropout_rate=0.1,
+        training=True,
+        name="dcnn",
+    ):
         super(DCNN, self).__init__(name=name)
 
         self.embedding = layers.Embedding(vocab_size, emb_dim)
 
-        self.bigram = layers.Conv1D(filters=nb_filters, kernel_size=2, padding='same', activation='relu')
+        self.bigram = layers.Conv1D(filters=nb_filters,
+                                    kernel_size=2,
+                                    padding="same",
+                                    activation="relu")
 
-        self.trigram = layers.Conv1D(filters=nb_filters, kernel_size=3, padding='same', activation='relu')
+        self.trigram = layers.Conv1D(filters=nb_filters,
+                                     kernel_size=3,
+                                     padding="same",
+                                     activation="relu")
 
-        self.fourgram = layers.Conv1D(filters=nb_filters, kernel_size=4, padding='same', activation='relu')
-        
+        self.fourgram = layers.Conv1D(filters=nb_filters,
+                                      kernel_size=4,
+                                      padding="same",
+                                      activation="relu")
+
         self.pool = layers.GlobalMaxPool1D()
 
-        self.dense_1 = layers.Dense(units=ffn_units, activation='relu')
+        self.dense_1 = layers.Dense(units=ffn_units, activation="relu")
         self.dropout = layers.Dropout(rate=dropout_rate)
 
         if nb_classes == 2:
-            self.last_dense = layers.Dense(units=1, activation='sigmoid')
+            self.last_dense = layers.Dense(units=1, activation="sigmoid")
         else:
-            self.last_dense = layers.Dense(units=nb_classes, activation='softmax')
+            self.last_dense = layers.Dense(units=nb_classes,
+                                           activation="softmax")
 
     @classmethod
     def from_config(cls, config):

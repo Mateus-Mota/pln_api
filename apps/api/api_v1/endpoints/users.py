@@ -1,15 +1,16 @@
 from typing import List
 
-from apps.crud import user_crud
-from apps.api.api_v1.deps import get_db
-from apps.schemas.user_schemas import UserResponseSchema
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
-                     status)
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+from fastapi_redis_cache import FastApiRedisCache, cache
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
-from fastapi_redis_cache import FastApiRedisCache, cache
+
+from apps.api.api_v1.deps import get_db
 from apps.core.config import get_settings
 from apps.core.security import get_current_user_is_admin
+from apps.crud import user_crud
+from apps.schemas.user_schemas import UserResponseSchema
+
 settings = get_settings()
 
 router = APIRouter()
@@ -24,13 +25,14 @@ def startup():
         host_url=LOCAL_REDIS_URL,
         prefix="api-pln-cache",
         response_header="X-api-pln-Cache",
-        ignore_arg_types=[Request, Response, Session]
+        ignore_arg_types=[Request, Response, Session],
     )
 
 
 @router.get("/", response_model=List[UserResponseSchema])
 @cache()
-async def users(db: Session = Depends(get_db), current_user=Depends(get_current_user_is_admin)):
+async def users(db: Session = Depends(get_db),
+                current_user=Depends(get_current_user_is_admin)):
     """
     Get users
     """
